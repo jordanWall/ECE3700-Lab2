@@ -24,15 +24,15 @@ final class HttpRequest implements Runnable {
 	}
 
 	private void processRequest() throws Exception {
-		//get a reference to the socket's input and output streams ????????????????????
+		//get a reference to the socket's input and output streams
 		InputStream is = socket.getInputStream();
-		DataOutputStream os = new DataOutputStream(socket.getOutputStream()); ////////////DataOutputStream??
+		DataOutputStream os = new DataOutputStream(socket.getOutputStream());
 
-		//set up input stream filters ??????????????????????
+		//set up input stream filters
 		InputStreamReader stream = new InputStreamReader(is);
 		BufferedReader br = new BufferedReader(stream);
 
-		//get the request line of hte HTTP request message ????????????????????????
+		//get the request line of hte HTTP request message
 		String requestLine = br.readLine();
 
 		//display the request line
@@ -40,7 +40,7 @@ final class HttpRequest implements Runnable {
 		System.out.println(requestLine);
 
 		//get and display the header lines
-		String headerLine = null;
+		String headerLine;
 
 		while((headerLine = br.readLine()).length() != 0) {
 			System.out.println(headerLine);
@@ -70,25 +70,25 @@ final class HttpRequest implements Runnable {
 		}
 
 		//construct the response message
-		String statusLine = null;
-		String contentTypeLine = null;
+		String statusLine;
+		String contentTypeLine;
 		String entityBody = null;
 
 		if(fileExists){
-			statusLine = "200 OK"; //???????????????
+			statusLine = "200 OK" + CRLF; //???????????????
 			contentTypeLine = "Content-type: " + contentType(fileName) + CRLF;
 		}
 		else {
-			statusLine = "404 Not Found"; //???????????????
-			contentTypeLine = "Content-type: " + contentType(fileName) + CRLF; //????????????????
+			statusLine = "404 Not Found" + CRLF;
+			contentTypeLine = "Content-type: " + contentType(fileName) + CRLF;
 			entityBody = "<HTML>" + "<HEAD><TITLE>Not Found</TITLE></HEAD>" + "<BODY>Not Found</BODY></HTML>";
 		}
 
-		//send the status line ??????????????????
+		//send the status line
 		os.writeBytes(statusLine);
-		//send the content type line ????????????????
+		//send the content type line
 		os.writeBytes(contentTypeLine);
-		//send a blank line to indicate the end of the header lines ?????????????????
+		//send a blank line to indicate the end of the header lines
 		os.writeBytes(CRLF);
 
 		//send the entity body
@@ -96,7 +96,7 @@ final class HttpRequest implements Runnable {
 			sendBytes(fis, os);
 			fis.close();
 		}
-		else { //??????????????????????
+		else {
 			os.writeBytes(entityBody);
 		}
 	}
@@ -106,7 +106,7 @@ final class HttpRequest implements Runnable {
 		byte[] buffer = new byte[1024];
 		int bytes = 0;
 		//copy requested file into the socket's output stream
-		while((bytes = fis.read(buffer)) != 1){
+		while((bytes = fis.read(buffer)) != -1){
 			os.write(buffer, 0, bytes);
 		}
 	}

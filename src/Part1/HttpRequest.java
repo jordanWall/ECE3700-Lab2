@@ -21,17 +21,16 @@ final class HttpRequest implements Runnable {
 		}
 	}
 
-	/////////////////////////Initialize things
 	private void processRequest() throws Exception {
-		//get a reference to the socket's input and output streams ????????????????????
+		//get a reference to the socket's input and output streams
 		InputStream is = socket.getInputStream();
-		DataOutputStream os = new DataOutputStream(socket.getOutputStream()); ////////////DataOutputStream??
+		DataOutputStream os = new DataOutputStream(socket.getOutputStream());
 
-		//set up input stream filters ??????????????????????
+		//set up input stream filters
 		InputStreamReader stream = new InputStreamReader(is);
 		BufferedReader br = new BufferedReader(stream);
 
-		//get the request line of hte HTTP request message ????????????????????????
+		//get the request line of the HTTP request message
 		String requestLine = br.readLine();
 
 		//display the request line
@@ -39,7 +38,7 @@ final class HttpRequest implements Runnable {
 		System.out.println(requestLine);
 
 		//get and display the header lines
-		String headerLine = null;
+		String headerLine;
 
 		while ((headerLine = br.readLine()).length() != 0) {
 			System.out.println(headerLine);

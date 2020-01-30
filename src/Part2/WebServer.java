@@ -7,11 +7,11 @@ public final class WebServer {
 
 	public static void main(String args[]) throws Exception {
 		int port = 5555; //set the port number
-		//establish the listen socket ??????????????????????????
+		//establish the listen socket
 		ServerSocket serverSocket = new ServerSocket(port);
 		//process the HTTP service requests in an infinite loop
 		while(true){
-			//listen for TCP connection request ???????????????????????????
+			//listen for TCP connection request
 			Socket clientSocket = serverSocket.accept();
 			//construct an object to process the HTTP request message
 			HttpRequest request = new HttpRequest(clientSocket);
