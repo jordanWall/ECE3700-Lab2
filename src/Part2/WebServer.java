@@ -1,6 +1,7 @@
-package Part1;
+package Part2;
 
-import java.net.*;
+import java.net.ServerSocket;
+import java.net.Socket;
 
 public final class WebServer {
 
